@@ -35,7 +35,8 @@ public class HabrCareerParse {
         });
     }
 
-    private static String getLocatDateTime (LocalDateTime localDateTime) {
+    private static String getLocatDateTime(LocalDateTime localDateTime) {
         return localDateTime != null ? localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) : "";
     }
+
 }
