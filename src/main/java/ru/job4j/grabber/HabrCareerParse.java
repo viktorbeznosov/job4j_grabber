@@ -33,10 +33,24 @@ public class HabrCareerParse {
                 LocalDateTime localDateTime = parser.parse(vacancyDate);
                 vacancyDate = getLocatDateTime(localDateTime);
                 String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
-                System.out.printf("%s %s %s%n", vacancyName, vacancyDate, link);
+                String description = retrieveDescription(link);
+                System.out.printf("%s %s %s %s%n", vacancyName, vacancyDate, description, link);
             });
         }
 
+    }
+
+    private static String retrieveDescription(String link) {
+        String description = null;
+        Connection vacancyConnection = Jsoup.connect(link);
+        try {
+            Document vacancyDocument = vacancyConnection.get();
+            Element vacancyElement = vacancyDocument.select(".faded-content").first();
+            description = vacancyElement.text();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return description;
     }
 
     private static String getLocatDateTime(LocalDateTime localDateTime) {
